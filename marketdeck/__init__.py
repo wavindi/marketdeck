@@ -1,0 +1,1 @@
+"""MarketDeck local financial workstation."""

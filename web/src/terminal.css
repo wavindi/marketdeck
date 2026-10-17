@@ -1,0 +1,151 @@
+/* Dense market-workstation skin. The research theme remains a softer alternative. */
+.app.modern {
+  --bg: #080d12;
+  --rail: #0b1117;
+  --panel: #0b1117;
+  --border: #26343e;
+  --text: #d7e2e8;
+  --muted: #8296a2;
+  --accent: #f4ad3d;
+  --hover: #17232c;
+}
+
+.app.classic {
+  --bg: #080908;
+  --rail: #0c0d09;
+  --panel: #0c0e0b;
+  --border: #4a4028;
+  --text: #ead9ad;
+  --muted: #ab966a;
+  --accent: #ffb52d;
+  --hover: #231e12;
+}
+
+.app:not(.research) {
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: -.12px;
+}
+
+.app:not(.research) .rail {
+  width: 176px;
+  padding: 12px 8px;
+}
+
+.app:not(.research) .brand {
+  gap: 8px;
+  padding: 5px 6px 19px;
+  font-size: 12px;
+  letter-spacing: .7px;
+  border-bottom: 1px solid var(--border);
+}
+
+.app:not(.research) .brand-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 0;
+  font-size: 15px;
+}
+
+.app:not(.research) .brand small { font-size: 7px; }
+.app:not(.research) nav { gap: 0; margin-top: 10px; }
+.app:not(.research) nav button {
+  border-radius: 0;
+  padding: 9px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-left: 2px solid transparent;
+}
+.app:not(.research) nav button.active {
+  border-left-color: var(--accent);
+  background: var(--hover);
+}
+.app:not(.research) nav button::after { content: '›'; margin-left: auto; color: var(--muted); }
+.app:not(.research) .rail-bottom { padding: 12px 3px 0; }
+.app:not(.research) .rail select { border-radius: 0; margin: 8px 0 14px; padding: 6px; font-size: 10px; }
+.app:not(.research) main { padding: 0 10px; }
+.app:not(.research) .topbar { height: 62px; gap: 12px; }
+.app:not(.research) .heading h1 { font-size: 17px; letter-spacing: .25px; margin-top: 2px; }
+.app:not(.research) .eyebrow, .app:not(.research) .section-label { font-size: 9px; letter-spacing: .7px; }
+.app:not(.research) .search { border-radius: 0; padding: 4px 5px; width: 310px; }
+.app:not(.research) .search input { font-size: 10px; }
+.app:not(.research) .search button, .app:not(.research) .form-row button { border-radius: 0; padding: 5px 9px; }
+.app:not(.research) .dashboard { gap: 5px; padding: 5px 0; grid-template-rows: minmax(330px, 47vh) minmax(330px, 47vh); }
+.app:not(.research) .panel { border-radius: 0; }
+.app:not(.research) .panel-head { height: 42px; padding: 6px 10px; }
+.app:not(.research) .panel-head h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .3px; margin: 2px 0 0; }
+.app:not(.research) .muted { font-size: 9px; text-transform: none; }
+.app:not(.research) table { font-size: 10px; }
+.app:not(.research) th { padding: 7px 9px; font-size: 9px; background: #121c23; }
+.app:not(.research) td { padding: 7px 9px; }
+.app:not(.research) td strong { font-size: 10px; color: var(--text); }
+.app:not(.research) td small { font: 8px 'JetBrains Mono', Consolas, monospace; margin-top: 2px; }
+.app:not(.research) .watch table { table-layout: fixed; }
+.app:not(.research) .watch th:nth-child(1) { width: 42%; }
+.app:not(.research) .watch th:nth-child(2) { width: 21%; }
+.app:not(.research) .watch th:nth-child(3) { width: 18%; }
+.app:not(.research) .watch th:nth-child(4) { width: 19%; }
+.app:not(.research) .watch th, .app:not(.research) .watch td { padding-left: 5px; padding-right: 5px; overflow: hidden; text-overflow: ellipsis; }
+.app:not(.research) .watch td strong, .app:not(.research) .watch td small { overflow: hidden; text-overflow: ellipsis; }
+.app:not(.research) .fresh { border-radius: 0; padding: 1px 3px; font-size: 8px; }
+.app:not(.research) .quote-line { padding: 10px 10px 2px; font-size: 19px; }
+.app:not(.research) .quote-line small { font: 9px 'JetBrains Mono', Consolas, monospace; }
+.app:not(.research) .news-list a { padding: 9px 10px; font-size: 10px; }
+.app:not(.research) .news-list small { font-size: 8px; }
+.app:not(.research) .panel-foot { padding: 5px 9px; font-size: 8px; }
+.app:not(.research) .aggregate { padding: 6px 10px; font-size: 9px; }
+.app:not(.research) .form-row { padding: 9px; }
+.app:not(.research) .form-row input, .app:not(.research) .form-row select { border-radius: 0; }
+.app:not(.research) .preset-list button { border-radius: 0; }
+.app:not(.research) .search-results { top: 53px; border-radius: 0; }
+
+.market-strip {
+  display: flex;
+  align-items: stretch;
+  min-height: 32px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.market-strip .strip-label {
+  color: var(--bg);
+  background: var(--accent);
+  font: 700 9px 'JetBrains Mono', Consolas, monospace;
+  letter-spacing: .5px;
+  padding: 10px 9px;
+  flex: none;
+}
+.market-strip button {
+  background: transparent;
+  color: var(--text);
+  border: 0;
+  border-right: 1px solid var(--border);
+  padding: 5px 10px;
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  font: 9px 'JetBrains Mono', Consolas, monospace;
+  flex: none;
+}
+.market-strip button:hover { background: var(--hover); }
+.market-strip button strong { color: var(--accent); }
+.market-strip button em { font-style: normal; }
+.market-strip .strip-empty { color: var(--muted); padding: 9px; font-size: 9px; }
+.app.research .market-strip { display: none; }
+
+@media (min-width: 801px) {
+  .app:not(.research) .dashboard { grid-template-columns: minmax(0, var(--leftPct, 44%)) minmax(0, 1fr); }
+}
+@media (max-width: 800px) {
+  .app:not(.research) .dashboard { display: block; }
+  .app:not(.research) .dashboard .panel { height: 350px; margin-bottom: 5px; }
+}
+@media (max-width: 700px) {
+  .app:not(.research) .rail { width: 100%; min-height: 0; }
+  .app:not(.research) .rail .brand { padding-bottom: 6px; }
+  .app:not(.research) .topbar { height: auto; padding: 8px 0; }
+  .app:not(.research) .search { width: 100%; }
+  .app:not(.research) .dashboard .panel { height: 350px; }
+}
