@@ -132,6 +132,8 @@
 .market-strip button:hover { background: var(--hover); }
 .market-strip button strong { color: var(--accent); }
 .market-strip button em { font-style: normal; }
+.market-strip .strip-remove { margin-left: auto; border-left: 1px solid var(--border); color: #ee767e; }
+.market-strip .strip-remove:hover { background: #3b1b20; }
 .market-strip .strip-empty { color: var(--muted); padding: 9px; font-size: 9px; }
 .app.research .market-strip { display: none; }
 

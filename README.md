@@ -30,7 +30,7 @@ Open `http://127.0.0.1:5173`. The web UI and TUI share `http://127.0.0.1:8765` a
 To run that preserved prototype in a fresh environment, also install `requirements-prototype.txt`.
 After dependencies are installed, `scripts/run.ps1` (Windows) or `scripts/run.sh` (macOS/Linux) starts the backend and web client together; stopping the script stops its backend process. The TUI remains a separate command.
 
-In the web UI, press `Ctrl+K` for instrument search; choose a result to add it to the saved watchlist. Use the Layout slider to persist dashboard column width. In the terminal UI, press `Ctrl+P`, enter a Yahoo symbol or `venue:BASE/QUOTE`, and press Enter to add a live subscription; `Ctrl+T` cycles themes.
+In the web UI, press `Ctrl+K` for instrument search; choose a result to add it to the saved watchlist. Select a watchlist row and use `REMOVE` on the market tape to unsubscribe it. Use the Layout slider to persist dashboard column width. In the terminal UI, press `Ctrl+P`, enter a Yahoo symbol or `venue:BASE/QUOTE`, and press Enter to add a live subscription; `Ctrl+T` cycles themes.
 
 ## Optional research credentials
 
@@ -51,4 +51,4 @@ The current web interface provides live quotes, watchlists, candlestick charts, 
 
 ## API
 
-Open `/docs` on the local backend for the REST contract. `/api/v1/stream` sends a snapshot, sequenced events and heartbeats, and accepts `{ "type": "subscribe", "instruments": ["AAPL", "kraken:BTC/USD"] }`, `unsubscribe`, and `resync` messages. Do not expose the backend publicly: it has no authentication and is bound to loopback.
+Open `/docs` on the local backend for the REST contract. `/api/v1/stream` sends a snapshot, sequenced events and heartbeats, and accepts `{ "type": "subscribe", "instruments": ["AAPL", "kraken:BTC/USD"] }`, `unsubscribe`, and `resync` messages. Repeated subscriptions from one client are idempotent; unsubscribe accepts either a Yahoo ticker or a venue-qualified instrument ID. Do not expose the backend publicly: it has no authentication and is bound to loopback.

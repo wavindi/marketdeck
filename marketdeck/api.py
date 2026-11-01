@@ -12,7 +12,7 @@ from fastapi.responses import JSONResponse
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
-from .models import now
+from .models import instrument_id, now
 from .service import MarketService
 from .providers import safe_error
 
@@ -298,16 +298,25 @@ async def stream(socket: WebSocket):
             action = message.get("type")
             if action == "subscribe":
                 for value in message.get("instruments", [])[:50]:
-                    key = await service.subscribe(str(value))
+                    requested = str(value)
+                    venue, symbol = requested.split(":", 1) if ":" in requested else ("yahoo", requested)
+                    candidate = instrument_id(symbol.strip(), venue.strip())
+                    if candidate in own:
+                        await send({"type": "subscribed", "instrument_id": candidate, "data": service.quotes.get(candidate)})
+                        continue
+                    key = await service.subscribe(requested)
                     own.add(key)
                     await send({"type": "subscribed", "instrument_id": key, "data": service.quotes.get(key)})
             elif action == "unsubscribe":
-                for key in message.get("instruments", [])[:50]:
+                for value in message.get("instruments", [])[:50]:
+                    requested = str(value)
+                    venue, symbol = requested.split(":", 1) if ":" in requested else ("yahoo", requested)
+                    key = instrument_id(symbol.strip(), venue.strip())
                     if key in own:
                         own.remove(key)
                         await service.unsubscribe(key)
             elif action == "resync":
-                await send({"type": "snapshot", "seq": service.sequence, "data": {"quotes": list(service.quotes.values()), "books": list(service.books.values())}})
+                await send({"type": "snapshot", "seq": service.sequence, "data": {"quotes": list(service.quotes.values()), "books": list(service.books.values()), "health": {k: v.model_dump(mode="json") for k, v in service.health.items()}}})
 
     tasks = [asyncio.create_task(sender()), asyncio.create_task(receiver())]
     try:

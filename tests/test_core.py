@@ -138,6 +138,25 @@ class APITests(unittest.TestCase):
                 service.quotes["yahoo:SPY"] = quote.model_dump(mode="json")
                 self.assertEqual(client.post("/api/v1/paper/test/orders", json={"instrument_id": "yahoo:SPY", "side": "buy", "quantity": 1}).status_code, 409)
 
+    def test_websocket_repeated_subscribe_is_idempotent(self):
+        with patch.object(service, "start", new_callable=AsyncMock), patch.object(service, "close", new_callable=AsyncMock), patch.object(service, "subscribe", new_callable=AsyncMock, return_value="yahoo:SPY") as subscribe, patch.object(service, "unsubscribe", new_callable=AsyncMock) as unsubscribe:
+            with TestClient(app) as client:
+                with suppress(concurrent.futures.CancelledError):
+                    with client.websocket_connect("/api/v1/stream") as ws:
+                        self.assertEqual(ws.receive_json()["type"], "snapshot")
+                        ws.send_json({"type": "subscribe", "instruments": ["SPY", "yahoo:spy"]})
+                        self.assertEqual(ws.receive_json()["instrument_id"], "yahoo:SPY")
+                        self.assertEqual(ws.receive_json()["instrument_id"], "yahoo:SPY")
+                        ws.send_json({"type": "resync"})
+                        snapshot = ws.receive_json()
+                        self.assertEqual(snapshot["type"], "snapshot")
+                        self.assertIn("health", snapshot["data"])
+                        ws.send_json({"type": "unsubscribe", "instruments": ["spy"]})
+                        ws.send_json({"type": "resync"})
+                        self.assertEqual(ws.receive_json()["type"], "snapshot")
+                        subscribe.assert_awaited_once_with("SPY")
+                        unsubscribe.assert_awaited_once_with("yahoo:SPY")
+
 
 if __name__ == "__main__":
     unittest.main()
